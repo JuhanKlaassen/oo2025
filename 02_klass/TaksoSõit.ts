@@ -11,23 +11,23 @@ class TaksoSõit {
       this.kasOnÖö = kasOnÖö;
     }
   
-    getPrice(): number {
-      let price = this.pikkus * this.hind;
+    sõiduHind(): number {
+      let tasu = this.pikkus * this.hind;
       if (this.kasOnÖö) {
-        price *= 1.2;
+        tasu *= 1.2;
       }
-      return price;
+      return tasu;
     }
   
-    getRideInfo(): string {
-        return "Sihtkoht: " + this.sihtkoht + ", Vahemaa: " + this.pikkus + " km" + ", Hind: " + this.getPrice().toFixed(2) + "€";
+    sõiduInfo(): string {
+        return "Sihtkoht: " + this.sihtkoht + ", Vahemaa: " + this.pikkus + " km" + ", Hind: " + this.sõiduHind().toFixed(2) + "€";
     }
 }
 
-  let ride1 = new TaksoSõit("Tallinn - Tartu", 180, 0.5, false);
-  let ride2 = new TaksoSõit("Tallinn - Pärnu", 130, 0.5, true);
+  let sõit1 = new TaksoSõit("Tallinn -> Tartu", 210, 0.5, false);
+  let sõit2 = new TaksoSõit("Tallinn -> Pärnu", 130, 0.3, true);
 
-  console.log(ride1.getRideInfo());
-  console.log(ride2.getRideInfo());
+  console.log(sõit1.sõiduInfo());
+  console.log(sõit2.sõiduInfo());
   
   

@@ -5,19 +5,19 @@ var TaksoSõit = /** @class */ (function () {
         this.hind = hind;
         this.kasOnÖö = kasOnÖö;
     }
-    TaksoSõit.prototype.getPrice = function () {
-        var price = this.pikkus * this.hind;
+    TaksoSõit.prototype.sõiduHind = function () {
+        var tasu = this.pikkus * this.hind;
         if (this.kasOnÖö) {
-            price *= 1.2;
+            tasu *= 1.2;
         }
-        return price;
+        return tasu;
     };
-    TaksoSõit.prototype.getRideInfo = function () {
-        return "Sihtkoht: " + this.sihtkoht + ", Vahemaa: " + this.pikkus + " km" + ", Hind: " + this.getPrice().toFixed(2) + "€";
+    TaksoSõit.prototype.sõiduInfo = function () {
+        return "Sihtkoht: " + this.sihtkoht + ", Vahemaa: " + this.pikkus + " km" + ", Hind: " + this.sõiduHind().toFixed(2) + "€";
     };
     return TaksoSõit;
 }());
-var ride1 = new TaksoSõit("Tallinn - Tartu", 180, 0.5, false);
-var ride2 = new TaksoSõit("Tallinn - Pärnu", 130, 0.5, true);
-console.log(ride1.getRideInfo());
-console.log(ride2.getRideInfo());
+var sõit1 = new TaksoSõit("Tallinn -> Tartu", 210, 0.5, false);
+var sõit2 = new TaksoSõit("Tallinn -> Pärnu", 130, 0.3, true);
+console.log(sõit1.sõiduInfo());
+console.log(sõit2.sõiduInfo());
