@@ -1,22 +1,27 @@
 interface Car {
     brand: string;
-    fuelConsumption?: number;
-    getRange(fuelAmount: number): number;
+    fuelConsumption: number;
+    fuelAmount: number;
+    getRange(): number;
 }
 
-class electricCar implements Car {
+class ElectricCar implements Car {
     brand: string;
-    batteryCapacity: number;
+    fuelConsumption: number = 0;
     efficiency: number
-    constructor(batteryCapacity: number, efficiency: number) {
-        this.brand = "Renault 5 EV";
+    fuelAmount: number
+    constructor(brand: string, fuelAmount: number, efficiency: number) {
+        this.brand = brand;
+        this.efficiency = efficiency;
+        this.fuelAmount = fuelAmount;
     }
     getRange(fuelAmount: number): number {
         return fuelAmount * this.efficiency;
+        this.
     }
 }
 
-class petrolCar implements Car {
+class PetrolCar implements Car {
     brand: string;
     fuelConsumption: number;
     constructor(fuelConsumption: number) {
@@ -28,7 +33,7 @@ class petrolCar implements Car {
 }
 
 
-class dieselCar implements Car {
+class DieselCar implements Car {
     brand: string;
     fuelConsumption: number;
     constructor(fuelConsumption: number) {
@@ -44,9 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!output) return;
     
     const cars: Car[] = [
-        new electricCar(75, 6),
-        new petrolCar(7.8),
-        new dieselCar(5.5)
+        new ElectricCar(75, 6),
+        new PetrolCar(7.8),
+        new DieselCar(5.5)
     ];
     
     cars.forEach(car => {
