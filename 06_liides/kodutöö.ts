@@ -10,37 +10,27 @@ class ElectricCar implements Car {
     fuelConsumption: number = 0;
     efficiency: number
     fuelAmount: number
-    constructor(brand: string, fuelAmount: number, efficiency: number) {
+    constructor(brand: string,  efficiency: number, fuelAmount: number) {
         this.brand = brand;
         this.efficiency = efficiency;
         this.fuelAmount = fuelAmount;
     }
-    getRange(fuelAmount: number): number {
-        return fuelAmount * this.efficiency;
-        this.
+    getRange(): number {
+        return Math.round(this.fuelAmount * this.efficiency);
     }
 }
 
-class PetrolCar implements Car {
+class CombustionCar implements Car {
     brand: string;
     fuelConsumption: number;
-    constructor(fuelConsumption: number) {
-        this.brand = "Peugeot 407";
+    fuelAmount: number;
+    constructor(brand:string, fuelConsumption: number, fuelAmount: number) {
+        this.brand = brand;
+        this.fuelConsumption = fuelConsumption;
+        this.fuelAmount = fuelAmount;
     }
-    getRange(fuelAmount: number): number {
-        return (fuelAmount / this.fuelConsumption) * 100;
-    }
-}
-
-
-class DieselCar implements Car {
-    brand: string;
-    fuelConsumption: number;
-    constructor(fuelConsumption: number) {
-        this.brand = "Audi A4";
-    }
-    getRange(fuelAmount: number): number {
-        return (fuelAmount / this.fuelConsumption) * 100;
+    getRange(): number {
+        return Math.round((this.fuelAmount / this.fuelConsumption) * 100);
     }
 }
 
@@ -49,15 +39,14 @@ document.addEventListener("DOMContentLoaded", () => {
     if (!output) return;
     
     const cars: Car[] = [
-        new ElectricCar(75, 6),
-        new PetrolCar(7.8),
-        new DieselCar(5.5)
+        new ElectricCar("Renault 5 EV", 7.3, 52),
+        new CombustionCar("Peugeot 407 bensiin", 7.8, 66),
+        new CombustionCar("Audi A4 diisel", 5.5, 54)
     ];
     
     cars.forEach(car => {
-        const fuelAmount = 50;
         const div = document.createElement("div");
-        div.textContent = `${car.brand} - Sõiduulatus ${fuelAmount} ühikuga: ${car.getRange(fuelAmount)} km`;
+        div.textContent = `${car.brand} - Kütusetangi/Aku suurus: ${fuelAmount} Sõiduulatus: ${car.getRange(fuelAmount)} km`;
         output.appendChild(div);
     });
 });

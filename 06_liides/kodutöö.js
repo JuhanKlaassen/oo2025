@@ -1,43 +1,38 @@
-var electricCar = /** @class */ (function () {
-    function electricCar(batteryCapacity, efficiency) {
-        this.brand = "Renault 5 EV";
+var ElectricCar = /** @class */ (function () {
+    function ElectricCar(brand, efficiency, fuelAmount) {
+        this.fuelConsumption = 0;
+        this.brand = brand;
+        this.efficiency = efficiency;
+        this.fuelAmount = fuelAmount;
     }
-    electricCar.prototype.getRange = function (fuelAmount) {
-        return fuelAmount * this.efficiency;
+    ElectricCar.prototype.getRange = function () {
+        return Math.round(this.fuelAmount * this.efficiency);
     };
-    return electricCar;
+    return ElectricCar;
 }());
-var petrolCar = /** @class */ (function () {
-    function petrolCar(fuelConsumption) {
-        this.brand = "Peugeot 407";
+var CombustionCar = /** @class */ (function () {
+    function CombustionCar(brand, fuelConsumption, fuelAmount) {
+        this.brand = brand;
+        this.fuelConsumption = fuelConsumption;
+        this.fuelAmount = fuelAmount;
     }
-    petrolCar.prototype.getRange = function (fuelAmount) {
-        return (fuelAmount / this.fuelConsumption) * 100;
+    CombustionCar.prototype.getRange = function () {
+        return Math.round((this.fuelAmount / this.fuelConsumption) * 100);
     };
-    return petrolCar;
-}());
-var dieselCar = /** @class */ (function () {
-    function dieselCar(fuelConsumption) {
-        this.brand = "Audi A4";
-    }
-    dieselCar.prototype.getRange = function (fuelAmount) {
-        return (fuelAmount / this.fuelConsumption) * 100;
-    };
-    return dieselCar;
+    return CombustionCar;
 }());
 document.addEventListener("DOMContentLoaded", function () {
     var output = document.getElementById("output");
     if (!output)
         return;
     var cars = [
-        new electricCar(75, 6),
-        new petrolCar(7.8),
-        new dieselCar(5.5)
+        new ElectricCar("Renault 5 EV", 7.3, 52),
+        new CombustionCar("Peugeot 407 bensiin", 7.8, 66),
+        new CombustionCar("Audi A4 diisel", 5.5, 54)
     ];
     cars.forEach(function (car) {
-        var fuelAmount = 50;
         var div = document.createElement("div");
-        div.textContent = "".concat(car.brand, " - S\u00F5iduulatus ").concat(fuelAmount, " \u00FChikuga: ").concat(car.getRange(fuelAmount), " km");
+        div.textContent = "".concat(car.brand, " - K\u00FCtusetangi/Aku suurus: ").concat(fuelAmount, " S\u00F5iduulatus: ").concat(car.getRange(fuelAmount), " km");
         output.appendChild(div);
     });
 });

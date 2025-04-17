@@ -10,4 +10,4 @@ var sõnadeLoend = ["kass", "koer", "kala", "küpsis", "kool", "tallinn", "õlu"
 console.log(SõnaKontrollija("ksipsü", sõnadeLoend));
 console.log(SõnaKontrollija("saõklus", sõnadeLoend));
 console.log(SõnaKontrollija("litnnal", sõnadeLoend));
-console.log(SõnaKontrollija("vreok", sõnadeLoend));
+console.log(SõnaKontrollija("reoK", sõnadeLoend));
