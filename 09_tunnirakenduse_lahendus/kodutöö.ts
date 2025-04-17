@@ -13,7 +13,7 @@ class Car {
         this.maxFuel = maxFuel;
 
         if (fuelLevel > this.maxFuel) {
-            throw new Error("Tank ei tohi olla üle " + this.maxFuel + " liitri!");
+            throw new Error("The fuel tank cannot exceed " + this.maxFuel + " liters of fuel");
         }
 
     }
@@ -21,11 +21,11 @@ class Car {
     drive(minutes: number): void {
         let hours = minutes / 60;
         let distance = this.speed * hours;
-        let fuelNeeded = distance * this.fuelConsumption;
-
+        let fuelNeeded = (distance / 100) * this.fuelConsumption;
+    
         if (fuelNeeded > this.fuelLevel) {
-            console.log("Kütus sai otsa enne sihtpunkti jõudmist.");
-            let maxDistance = this.fuelLevel / this.fuelConsumption;
+            console.log("The fuel ran out");
+            let maxDistance = (this.fuelLevel / this.fuelConsumption) * 100;
             this.distanceDriven += maxDistance;
             this.fuelLevel = 0;
         } else {
@@ -36,7 +36,7 @@ class Car {
 
     refuel(liters: number): void {
         if (liters + this.fuelLevel > this.maxFuel) {
-            throw new Error("Auto tanki ei mahu üle " + this.maxFuel + " liitri");
+            throw new Error("The car cannot fit over " + this.maxFuel + " liters of fuel");
         }
         this.fuelLevel += liters;
     }
@@ -50,8 +50,12 @@ class Car {
     }
 }
 
-let Peugeot407 = new Car(66, 7.8, 94, 66);
-console.log("Peugeot 407 kütuse tase: " + Peugeot407.getFuelLevel() + " liitrit");
-Peugeot407.drive(90);
-console.log("Peugeot 407 sõidetud vahemaa: " + Peugeot407.getDistance() + " km");
-Peugeot407.refuel(10);
+let Peugeot407 = new Car(66, 7.8, 90, 66);
+console.log("Peugeot 407 fuel amount: " + Peugeot407.getFuelLevel() + " liters");
+Peugeot407.drive(500);
+console.log("Peugeot 407 driven distance: " + Peugeot407.getDistance() + " km");
+console.log("Peugeot 407 fuel amount: " + Peugeot407.getFuelLevel() + " liters");
+Peugeot407.refuel(15);
+Peugeot407.drive(45);
+console.log("Peugeot 407 driven distance: " + Peugeot407.getDistance() + " km");
+console.log("Peugeot 407 fuel amount: " + Peugeot407.getFuelLevel() + " liters");
