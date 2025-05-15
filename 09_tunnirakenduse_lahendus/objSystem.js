@@ -3,30 +3,41 @@
 //trip simulation accounts for speed depending on highway/city driving, acceleration from stops and deceleration to stops, cargo/passenger weight
 var vehicle = /** @class */ (function () {
     function vehicle(fuelAmount, fuelCapacity, averageConsumption, normalWeight) {
+        if (fuelAmount < 0 || fuelCapacity <= 0 || averageConsumption <= 0 || normalWeight <= 0) {
+            throw new Error("Invalid input: All values must be positive.");
+        }
         this.fuelAmount = fuelAmount;
         this.fuelCapacity = fuelCapacity;
         this.averageConsumption = averageConsumption;
         this.normalWeight = normalWeight;
+        this.odometer = 0;
         if (this.fuelAmount > this.fuelCapacity) {
             throw new Error("The amount of fuel in the car cannot exceed " + fuelCapacity + " liters of fuel!");
         }
     }
     vehicle.prototype.drive = function (trip, highwaySpeed, citySpeed) {
+        if (highwaySpeed <= 0 || citySpeed <= 0) {
+            throw new Error("Speed must be greater than 0.");
+        }
         var totalDistance = trip.totalDistance();
         var consumptionAddon = trip.stopsCalc();
         var newConsumption = this.averageConsumption * consumptionAddon;
-        var neccesaryFuel = (totalDistance / 100) * newConsumption;
-        if (neccesaryFuel > this.fuelAmount) {
-            throw new Error("Tank requires " + neccesaryFuel + " liters of fuel but contains only " + this.fuelAmount + " liters of fuel.");
-            var maxDistance = (this.fuelAmount / newConsumption) * 100;
-            this.odometer += maxDistance;
+        var necessaryFuel = (totalDistance / 100) * newConsumption;
+        if (necessaryFuel > this.fuelAmount) {
+            throw new Error("Tank requires " + necessaryFuel + " liters of fuel but contains only " + this.fuelAmount + " liters of fuel.");
         }
         else {
             this.odometer += totalDistance;
-            this.fuelAmount -= neccesaryFuel;
+            this.fuelAmount -= necessaryFuel;
         }
     };
     vehicle.prototype.fillUp = function (addAmount) {
+        if (addAmount < 0) {
+            throw new Error("Cannot add a negative amount of fuel.");
+        }
+        if (this.fuelAmount + addAmount > this.fuelCapacity) {
+            throw new Error("Cannot exceed fuel capacity of " + this.fuelCapacity + " liters.");
+        }
         this.fuelAmount += addAmount;
     };
     vehicle.prototype.getFuelAmount = function () {
@@ -39,6 +50,9 @@ var vehicle = /** @class */ (function () {
 }());
 var trip = /** @class */ (function () {
     function trip(cityDistance, highwayDistance, stops, passengers) {
+        if (cityDistance < 0 || highwayDistance < 0 || stops < 0 || passengers < 0) {
+            throw new Error("Invalid input: All values must be non-negative.");
+        }
         this.cityDistance = cityDistance;
         this.highwayDistance = highwayDistance;
         this.stops = stops;
@@ -48,12 +62,15 @@ var trip = /** @class */ (function () {
         return this.cityDistance + this.highwayDistance;
     };
     trip.prototype.totalTime = function (citySpeed, highwaySpeed) {
+        if (citySpeed <= 0 || highwaySpeed <= 0) {
+            throw new Error("Speed must be greater than 0.");
+        }
         var highwayTime = this.highwayDistance / highwaySpeed;
         var cityTime = this.cityDistance / citySpeed;
         return (highwayTime + cityTime) * 60;
     };
     trip.prototype.stopsCalc = function () {
-        return 1 + (this.stops * 0.02);
+        return 1 + this.stops * 0.02;
     };
     return trip;
 }());
